@@ -1,0 +1,22 @@
+{
+    "lint": {
+        "rules": {
+            "exclude": [
+                "no-inferrable-types"
+            ],
+            "include": [
+                "no-case-declarations",
+                "no-cond-assign",
+                "no-fallthrough",
+                "prefer-const"
+            ]
+        },
+        "files": {
+            "include": [ "src/**/*.ts" ]
+        }
+    },
+    "importMap": "import_map.json",
+    "tasks": {
+        "start": "deno run cli/mod.ts"
+    }
+}
