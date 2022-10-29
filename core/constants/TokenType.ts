@@ -1,7 +1,8 @@
 export enum TokenType {
-    Number,
     Identifier,
     Keyword,
+    Number,
+    Boolean,
     BinaryOperator,
     Equals,
     Paren,

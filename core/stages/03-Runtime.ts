@@ -2,6 +2,7 @@ import { BinaryExpression, NumberLiteral } from "@expressions";
 import { Statement } from "@structures";
 import InterpreterError from "@errors";
 import { Program } from "./02-Parser.ts";
+import { comparativeOperators, multiplicitateOperators } from "../constants/Operators.ts";
 
 interface RuntimeVal {
     type: string,
@@ -32,10 +33,6 @@ export class Runtime {
 
                 const lhs = <NumberVal>this.evaluate(binOperation.left);
                 const rhs = <NumberVal>this.evaluate(binOperation.right);
-
-                if (lhs.type !== "number" && rhs.type !== "number") {
-                    throw new InterpreterError('OperandType');
-                }
                 
                 return this.evalBinaryExpression(
                   lhs,
@@ -51,7 +48,7 @@ export class Runtime {
                 return lastEvaluated;
             }
             default: {
-                throw new InterpreterError('RuntimeError', astNode.kind);
+                throw new InterpreterError('RuntimeError');
             }
         }
     }
@@ -59,7 +56,13 @@ export class Runtime {
     private evalBinaryExpression(lhs: RuntimeVal, rhs: RuntimeVal, operator: string) {
         let result: number;
 
-        if(['/', '%'].includes(operator)) {
+        if(!comparativeOperators.includes(operator)) {
+            if (lhs.type !== "number" && rhs.type !== "number") {
+                throw new InterpreterError('OperandType');
+            }
+        }
+
+        if(multiplicitateOperators.includes(operator)) {
             if([lhs.value, rhs.value].includes(0)) {
                 throw new InterpreterError('DivisionByZero'); 
             }

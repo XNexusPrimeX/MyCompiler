@@ -22,7 +22,7 @@ export class Tokenizer {
     constructor(code: string) {
         this.source = code.split('');
 
-        const binaryOp = /[*/%+-]/;
+        const binaryOp = /[!=<>*/%+-]/;
         const whitespace = /[\s\t\n]/;
         const numbers = /[0-9]/;
         const letters = /[a-z]/i;
@@ -31,11 +31,17 @@ export class Tokenizer {
             if(['(', ')'].includes(this.source[0])) {
                 this.pushToken(TokenType.Paren, this.source.shift());
             }
-            else if(binaryOp.test(this.source[0])) {
-                this.pushToken(TokenType.BinaryOperator, this.source.shift());
-            }
-            else if(this.source[0] === '=') {
+            else if(this.source[0] === '=' && this.source[1] !== '=') {
                 this.pushToken(TokenType.Equals, this.source.shift());
+            }
+            else if(binaryOp.test(this.source[0])) {
+                let value = '';
+
+                while (binaryOp.test(this.source[0])) {
+                    value += this.source.shift();
+                }
+
+                this.pushToken(TokenType.BinaryOperator, value);
             }
             else if(numbers.test(this.source[0])) {
                 let value = '';
@@ -55,7 +61,12 @@ export class Tokenizer {
 				const reserved = Keyword[ident as keyof typeof Keyword];
 
 				if (reserved) {
-					this.pushToken(TokenType.Keyword, reserved);
+                    // FIXME: Essa condição sempre é false
+                    if([Keyword.true, Keyword.false].includes(reserved)) {
+                        this.pushToken(TokenType.Boolean, ident);
+                    } else {
+                        this.pushToken(TokenType.Keyword, ident);
+                    }
 				} else {
 					this.pushToken(TokenType.Identifier, ident);
 				}

@@ -1,8 +1,8 @@
-import { TokenType } from "@constants";
+import { additiveOperators, comparativeOperators, multiplicitateOperators, TokenType } from "@constants";
 import { Statement } from "@structures";
-import { BinaryExpression, Identifier, NumberLiteral } from '@expressions';
+import { BinaryExpression, BooleanLiteral, Identifier, NumberLiteral } from '@expressions';
+import InterpreterError from "@errors";
 import { Token, Tokenizer } from "./01-Tokenizer.ts";
-import InterpreterError from "../../errors/mod.ts";
 
 export type NodeType =
     | 'Program'
@@ -42,7 +42,11 @@ export class Parser {
                 case TokenType.Number:
                     return new NumberLiteral({
                         value: parseFloat(<string>this.eat().value)
-                    })
+                    });
+                case TokenType.Boolean:
+                    return new BooleanLiteral({
+                        value: this.eat().value ? true : false
+                    });
                 case TokenType.BinaryOperator:
                     const binaryOp = this.eat();
                     const nextToken = this.eat();
@@ -72,8 +76,8 @@ export class Parser {
         let multiplicitaveParse = () => {
             let left = primaryParse()
 
-            while(['/', '*', '%'].includes(<string>this.at().value)) {
-                const operator = this.eat().value as string;
+            while(multiplicitateOperators.includes(this.at().value)) {
+                const operator = this.eat().value;
                 const right = primaryParse();
                 left = new BinaryExpression({
                     left,
@@ -87,8 +91,8 @@ export class Parser {
         let additiveParse = () => {
             let left = multiplicitaveParse()
 
-            while(['+', '-'].includes(<string>this.at().value)) {
-                const operator = this.eat().value as string;
+            while(additiveOperators.includes(this.at().value)) {
+                const operator = this.eat().value;
                 const right = multiplicitaveParse();
                 left = new BinaryExpression({
                     left,
@@ -99,8 +103,23 @@ export class Parser {
 
             return left;
         }
+        let comparativeParse = () => {
+            let left = additiveParse()
+        
+            while(comparativeOperators.includes(this.at().value)) {
+                const operator = this.eat().value;
+                const right = additiveParse();
+                left = new BinaryExpression({
+                    left,
+                    right,
+                    operator
+                });
+            }
 
-        return additiveParse()
+            return left
+        }
+
+        return comparativeParse();
     }
 
     constructor(tokens: Tokenizer['returns']) {

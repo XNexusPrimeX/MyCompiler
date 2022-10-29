@@ -10,3 +10,13 @@ export class NumberLiteral extends Expression {
         this.value = options.value;
     }
 }
+export class BooleanLiteral extends Expression {
+    kind = 'BooleanLiteral' as const;
+    value: boolean;
+
+    constructor(options: Omit<BooleanLiteral, 'kind'>) {
+        super();
+
+        this.value = options.value;
+    }
+}
