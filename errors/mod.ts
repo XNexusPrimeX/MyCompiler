@@ -2,10 +2,9 @@
 import codes from "./codes.ts";
 import messages from "./messages.ts";
 
-class InterpreterError<C extends keyof typeof codes> extends Error {
+class InterpreterError<C extends typeof codes[keyof typeof codes]> extends Error {
     code: string;
     constructor(code: C, ...args: Parameters<typeof messages[C]>) {
-        // @ts-ignore:
         super(buildMessage(code, args));
 
         this.code = code;
@@ -13,14 +12,13 @@ class InterpreterError<C extends keyof typeof codes> extends Error {
     }
 
     get name() {
-        return `[Error: ${this.code}]`;
+        return `[${this.code}]`;
     }
 }
 
 export default InterpreterError;
 
-function buildMessage(code: keyof typeof codes, args: [any]) {
-    if (!(code in codes)) throw new Error('Error code must be a valid DiscordjsErrorCodes');
+function buildMessage(code: typeof codes[keyof typeof codes], args: string[]) {
     const msg = messages[code];
 
     if (!msg) throw new Error(`No message associated with error code: ${code}.`);

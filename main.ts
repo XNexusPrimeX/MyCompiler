@@ -12,6 +12,7 @@ while(true) {
 
     try {
         const tokens = new Tokenizer(input).returns;
+        console.log(tokens)
         const program = new Parser(tokens).returns;
         const result = new Runtime(program).returns; 
         

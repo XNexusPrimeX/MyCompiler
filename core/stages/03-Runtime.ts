@@ -70,13 +70,13 @@ export class Runtime {
 
         if(!comparativeOperators.includes(operator)) {
             if (lhs.type !== "number" && rhs.type !== "number") {
-                throw new InterpreterError('OperandType');
+                throw new InterpreterError('TypeError');
             }
         }
 
         if(multiplicitateOperators.includes(operator)) {
             if([lhs.value, rhs.value].includes(0)) {
-                throw new InterpreterError('DivisionByZero'); 
+                throw new InterpreterError('ZeroDivisionError'); 
             }
         }
 

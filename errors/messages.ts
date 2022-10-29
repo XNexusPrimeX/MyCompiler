@@ -1,12 +1,12 @@
-// @ts-nocheck
+import errorCode from './codes.ts';
 
-import codes from './codes.ts';
+const makeMessages = (msgs: {[key in typeof errorCode[keyof typeof errorCode]]: (...args: string[]) => string }) => msgs;
 
-export default {
-    [codes.SintaxError]: (expectedType) => `expected ${expectedType}`,
-    [codes.UnexpectedToken]: (token) => `This token can't be parsed: "${token}"`,
-    [codes.UnexpectedCharacter]: (character) => `${character}`,
-    [codes.DivisionByZero]: () => 'The division by zero is impossible',
-    [codes.OperandType]: () => `Unsupported operand type`,
-    [codes.RuntimeError]: (type) => `No instructions to evaluate this type: ${type}`
-}
+export default makeMessages({
+    [errorCode.Sintax]: () => `Invalid Sintax`,
+    [errorCode.Parse]: (token) => `This token can't be parsed: "${token}"`,
+    [errorCode.UnexpectedCharacter]: (character) => `Invalid character: "${character}"`,
+    [errorCode.ZeroDivision]: () => 'The division by zero is impossible',
+    [errorCode.Type]: (expectedType, obtainedType) => `Expected type: ${expectedType}, but got: ${obtainedType}`,
+    [errorCode.Runtime]: (type) => `No instructions to evaluate this type: ${type}`,
+});

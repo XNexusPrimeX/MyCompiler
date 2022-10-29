@@ -1,15 +1,8 @@
-import { additiveOperators, comparativeOperators, multiplicitateOperators, TokenType } from "@constants";
+import { additiveOperators, allOperators, comparativeOperators, multiplicitateOperators, TokenType } from "@constants";
 import { Statement } from "@structures";
 import { BinaryExpression, BooleanLiteral, Identifier, NumberLiteral, StringLiteral } from '@expressions';
 import InterpreterError from "@errors";
 import { Token, Tokenizer } from "./01-Tokenizer.ts";
-
-export type NodeType =
-    | 'Program'
-    | 'NumberLiteral'
-    | 'Identifier'
-    | 'BinaryExpression'
-    | 'NullLiteral';
 
 export class Program extends Statement {
     kind = 'Program' as const;
@@ -34,38 +27,45 @@ export class Parser {
             const tk = this.at().type;
 
             switch (tk) {
-                case TokenType.Identifier:
+                case TokenType.Identifier: {
                     return new Identifier({
                         symbol: this.eat().value
                     });
-                    
-                case TokenType.Number:
+                }
+                case TokenType.Number: {
                     return new NumberLiteral({
                         value: parseFloat(this.eat().value)
                     });
-                case TokenType.String:
+                }
+                case TokenType.String: {
                     return new StringLiteral({
                         value: this.eat().value
                     })
-                case TokenType.Boolean:
+                }
+                case TokenType.Boolean: {
                     return new BooleanLiteral({
                         value: this.eat().value === 'true' ? true : false
                     });
-                case TokenType.BinaryOperator:
+                }
+                case TokenType.BinaryOperator: {
                     const binaryOp = this.eat();
+
+                    if(!allOperators.includes(binaryOp.value)) {
+                        throw new InterpreterError('UnexpectedCharacterError', binaryOp.value);
+                    }
+
                     const nextToken = this.eat();
 
-                    const isAdditiveOperation = ['+', '-'].includes(binaryOp.value);
+                    const isAdditiveOperation = additiveOperators.includes(binaryOp.value);
 
                     if(isAdditiveOperation && nextToken.type === TokenType.Number) {
                         return new NumberLiteral({
                             value: parseFloat(`${binaryOp.value}${nextToken.value}`)
-                        })
-                    } else {
-                        throw new InterpreterError('SintaxError', 'number');
-                    }
-                        
-                case TokenType.Paren:
+                        });
+                    } 
+                    else throw new InterpreterError('SintaxError', 'number'); 
+                }   
+                case TokenType.Paren: {
                     this.eat();
 
                     const value = this.parse();
@@ -73,8 +73,8 @@ export class Parser {
                     this.eat();
 
                     return value
-                default:
-                    Deno.exit(1);
+                }
+                default: throw new InterpreterError('SintaxError');
             }
         }
         let multiplicitaveParse = () => {

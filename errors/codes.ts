@@ -1,14 +1,14 @@
 // deno-lint-ignore-file no-explicit-any
 const keys = [
-    'SintaxError',
-    'UnexpectedToken',
+    'Sintax',
+    'Parse',
+    'ZeroDivision',
     'UnexpectedCharacter',
-    'DivisionByZero',
-    'OperandType',
-    'RuntimeError'
+    'Type',
+    'Runtime'
 ] as const;
 
 type _export = {
-    [K in typeof keys[any]]: K;
+    [K in typeof keys[any]]: `${K}Error`;
 };
-export default <_export>Object.fromEntries(keys.map(key => [key, key]));
+export default <_export>Object.fromEntries(keys.map(key => [key, `${key}Error`]));

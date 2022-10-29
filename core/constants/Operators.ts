@@ -17,3 +17,9 @@ export const multiplicitateOperators = [
     '%',
     '*'
 ];
+
+export const allOperators = [
+    ...comparativeOperators,
+    ...additiveOperators,
+    ...multiplicitateOperators
+]

@@ -87,7 +87,7 @@ export class Tokenizer {
                 this.source.shift();
             }
             else {
-                throw new InterpreterError("UnexpectedCharacter", this.source[0]);
+                throw new InterpreterError("UnexpectedCharacterError", this.source[0]);
             }
         }
 
