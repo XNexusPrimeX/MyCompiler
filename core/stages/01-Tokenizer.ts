@@ -78,6 +78,6 @@ export class Tokenizer {
             }
         }
 
-        this.pushToken(TokenType.EOF, undefined);
+        this.pushToken(TokenType.EOF, 'End of File');
     }
 }
