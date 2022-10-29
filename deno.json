@@ -1,0 +1,24 @@
+{
+    "lint": {
+        "rules": {
+            "exclude": [
+                "no-inferrable-types",
+                "ban-ts-comment"
+            ],
+            "include": [
+                "no-case-declarations",
+                "no-cond-assign",
+                "no-fallthrough"
+            ]
+        },
+        "files": {
+            "include": [ "src/**/*.ts" ]
+        }
+    },
+    "importMap": "import_map.json",
+    "tasks": {
+        "start": "deno run main.ts",
+        "build:linux": "deno compile --config ./deno.json --import-map import_map.json --target x86_64-unknown-linux-gnu --output mathpreter main.ts",
+        "build:windows": "deno compile --config ./deno.json --import-map import_map.json --target x86_64-pc-windows-msvc --output mathpreter main.ts"
+    }
+}

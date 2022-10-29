@@ -1,0 +1,9 @@
+{
+    "imports": {
+        "@constants": "./core/constants/mod.ts",
+        "@expressions": "./core/expressions/mod.ts",
+        "@core/": "./core/",
+        "@errors": "./errors/mod.ts",
+        "@structures": "./core/structures/mod.ts"
+    }
+}

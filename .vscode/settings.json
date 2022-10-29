@@ -1,0 +1,9 @@
+{
+    "deno.enable": true,
+    "deno.unstable": true,
+    "material-icon-theme.folders.associations": {
+        "stages": "tasks",
+        "structures": "class",
+        "expressions": "interface"
+    }
+}
