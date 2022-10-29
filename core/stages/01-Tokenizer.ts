@@ -58,11 +58,10 @@ export class Tokenizer {
 					ident += this.source.shift();
 				}
 
-				const reserved = Keyword[ident as keyof typeof Keyword];
+				const reserved = Keyword.find(v => v === ident);
 
 				if (reserved) {
-                    // FIXME: Essa condição sempre é false
-                    if([Keyword.true, Keyword.false].includes(reserved)) {
+                    if(['true', 'false'].includes(ident)) {
                         this.pushToken(TokenType.Boolean, ident);
                     } else {
                         this.pushToken(TokenType.Keyword, ident);

@@ -45,7 +45,7 @@ export class Parser {
                     });
                 case TokenType.Boolean:
                     return new BooleanLiteral({
-                        value: this.eat().value ? true : false
+                        value: this.eat().value === 'true' ? true : false
                     });
                 case TokenType.BinaryOperator:
                     const binaryOp = this.eat();

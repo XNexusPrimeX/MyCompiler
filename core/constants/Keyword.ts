@@ -1,6 +1,6 @@
-export enum Keyword {
-    true,
-    false,
-    var,
-    const
-}
+export const Keyword = [
+    'true',
+    'false',
+    'var',
+    'const'
+] as const;

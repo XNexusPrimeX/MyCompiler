@@ -8,5 +8,5 @@ export default {
     [codes.UnexpectedCharacter]: (character) => `${character}`,
     [codes.DivisionByZero]: () => 'The division by zero is impossible',
     [codes.OperandType]: () => `Unsupported operand type`,
-    [codes.RuntimeError]: () => `No instructions to evaluate this type: ${type}`
+    [codes.RuntimeError]: (type) => `No instructions to evaluate this type: ${type}`
 }

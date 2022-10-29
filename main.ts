@@ -17,6 +17,6 @@ while(true) {
         
         console.log(result?.value);
     } catch(e) {
-        console.error(`${e.name}: ${e.message}`);
+        console.error(e);
     }
 }
