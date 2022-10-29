@@ -1,7 +1,11 @@
-let keys = [
+// deno-lint-ignore-file no-explicit-any
+const keys = [
     'SintaxError',
     'UnexpectedToken',
-    'UnexpectedCharacter'
+    'UnexpectedCharacter',
+    'DivisionByZero',
+    'OperandType',
+    'RuntimeError'
 ] as const;
 
 type _export = {

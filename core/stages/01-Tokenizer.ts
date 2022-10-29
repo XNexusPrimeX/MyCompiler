@@ -3,22 +3,20 @@ import InterpreterError from "@errors";
 
 export class Token {
     type: TokenType
-    value: string | undefined
+    value: string
 
-    constructor(type: TokenType, value?: any | undefined) {
+    constructor(type: TokenType, value: any) {
         this.type = type;
         this.value = value;
     }
 }
 
 export class Tokenizer {
-    tokens = new Array<Token>();
+    returns = new Array<Token>();
     private source: Array<string>;
 
     private pushToken(...args: ConstructorParameters<typeof Token>) {
-        if(!args[1]) args[1] = this.source.shift();
-        
-        this.tokens.push(new Token(...args));
+        this.returns.push(new Token(...args));
     }
     
     constructor(code: string) {
@@ -31,13 +29,13 @@ export class Tokenizer {
 
         while(this.source.length > 0) {
             if(['(', ')'].includes(this.source[0])) {
-                this.pushToken(TokenType.Paren);
+                this.pushToken(TokenType.Paren, this.source.shift());
             }
             else if(binaryOp.test(this.source[0])) {
-                this.pushToken(TokenType.BinaryOperator);
+                this.pushToken(TokenType.BinaryOperator, this.source.shift());
             }
             else if(this.source[0] === '=') {
-                this.pushToken(TokenType.Equals);
+                this.pushToken(TokenType.Equals, this.source.shift());
             }
             else if(numbers.test(this.source[0])) {
                 let value = '';
@@ -65,7 +63,9 @@ export class Tokenizer {
             else if(whitespace.test(this.source[0])) {
                 this.source.shift();
             }
-            else throw new InterpreterError("UnexpectedCharacter", this.source[0])
+            else {
+                throw new InterpreterError("UnexpectedCharacter", this.source[0]);
+            }
         }
 
         this.pushToken(TokenType.EOF, undefined);

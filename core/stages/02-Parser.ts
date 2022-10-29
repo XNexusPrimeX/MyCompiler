@@ -2,6 +2,7 @@ import { TokenType } from "@constants";
 import { Statement } from "@structures";
 import { BinaryExpression, Identifier, NumberLiteral } from '@expressions';
 import { Token, Tokenizer } from "./01-Tokenizer.ts";
+import InterpreterError from "../../errors/mod.ts";
 
 export type NodeType =
     | 'Program'
@@ -17,7 +18,7 @@ export class Program extends Statement {
 
 export class Parser {
     private tokens: Token[] = [];
-    program: Program;
+    public returns: Program;
 
     private at() {
         return this.tokens[0] as Token;
@@ -37,12 +38,25 @@ export class Parser {
                     return new Identifier({
                         symbol: <string>this.eat().value
                     });
-
+                    
                 case TokenType.Number:
                     return new NumberLiteral({
                         value: parseFloat(<string>this.eat().value)
                     })
+                case TokenType.BinaryOperator:
+                    const binaryOp = this.eat();
+                    const nextToken = this.eat();
 
+                    const isAdditiveOperation = ['+', '-'].includes(binaryOp.value);
+
+                    if(isAdditiveOperation && nextToken.type === TokenType.Number) {
+                        return new NumberLiteral({
+                            value: parseFloat(`${binaryOp.value}${nextToken.value}`)
+                        })
+                    } else {
+                        throw new InterpreterError('SintaxError', 'number');
+                    }
+                        
                 case TokenType.Paren:
                     this.eat();
 
@@ -89,7 +103,7 @@ export class Parser {
         return additiveParse()
     }
 
-    constructor(tokens: Tokenizer['tokens']) {
+    constructor(tokens: Tokenizer['returns']) {
         this.tokens = tokens;
 
         const program = new Program();
@@ -98,6 +112,6 @@ export class Parser {
             program.body.push(this.parse())
         }
 
-        this.program = program;
+        this.returns = program;
     }
 }

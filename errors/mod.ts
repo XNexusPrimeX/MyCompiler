@@ -1,9 +1,11 @@
+// deno-lint-ignore-file no-explicit-any
 import codes from "./codes.ts";
 import messages from "./messages.ts";
 
 class InterpreterError<C extends keyof typeof codes> extends Error {
     code: string;
     constructor(code: C, ...args: Parameters<typeof messages[C]>) {
+        // @ts-ignore:
         super(buildMessage(code, args));
 
         this.code = code;
@@ -11,7 +13,7 @@ class InterpreterError<C extends keyof typeof codes> extends Error {
     }
 
     get name() {
-        return `${super.name} [${this.code}]`;
+        return `[Error: ${this.code}]`;
     }
 }
 
