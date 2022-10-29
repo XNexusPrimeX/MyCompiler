@@ -1,4 +1,4 @@
-import { BinaryExpression, BooleanLiteral, NumberLiteral } from "@expressions";
+import { BinaryExpression, BooleanLiteral, NumberLiteral, StringLiteral } from "@expressions";
 import { Statement } from "@structures";
 import InterpreterError from "@errors";
 import { Program } from "./02-Parser.ts";
@@ -24,6 +24,12 @@ export class Runtime {
                     type: 'number',
                     value: (astNode as NumberLiteral).value 
                 };
+            }
+            case 'StringLiteral': {
+                return {
+                    type: 'string',
+                    value: (astNode as StringLiteral).value
+                }
             }
             case 'BooleanLiteral': {
                 return {

@@ -31,6 +31,19 @@ export class Tokenizer {
             if(['(', ')'].includes(this.source[0])) {
                 this.pushToken(TokenType.Paren, this.source.shift());
             }
+            else if(this.source[0] === '"') {
+                let value = '';
+
+                this.source.shift();
+
+                while (this.source[0] !== '"') {
+                    value += this.source.shift();
+                }
+
+                this.source.shift();
+                
+                this.pushToken(TokenType.String, value);
+            }
             else if(this.source[0] === '=' && this.source[1] !== '=') {
                 this.pushToken(TokenType.Equals, this.source.shift());
             }

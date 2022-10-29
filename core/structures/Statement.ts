@@ -1,6 +1,7 @@
 type NodeType =
     | 'Program'
     | 'NumberLiteral'
+    | 'StringLiteral'
     | 'BooleanLiteral'
     | 'Identifier'
     | 'BinaryExpression'
