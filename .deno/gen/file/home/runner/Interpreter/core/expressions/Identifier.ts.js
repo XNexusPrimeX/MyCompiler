@@ -1,0 +1,10 @@
+import { Expression } from "@structures";
+export class Identifier extends Expression {
+    kind = 'Identifier';
+    symbol;
+    constructor(options) {
+        super();
+        this.symbol = options.symbol;
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSWRlbnRpZmllci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIklkZW50aWZpZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFVBQVUsRUFBRSxNQUFNLGFBQWEsQ0FBQztBQUV6QyxNQUFNLE9BQU8sVUFBVyxTQUFRLFVBQVU7SUFDdEMsSUFBSSxHQUFHLFlBQXFCLENBQUM7SUFDN0IsTUFBTSxDQUFTO0lBRWYsWUFBWSxPQUFpQztRQUN6QyxLQUFLLEVBQUUsQ0FBQztRQUVSLElBQUksQ0FBQyxNQUFNLEdBQUcsT0FBTyxDQUFDLE1BQU0sQ0FBQztJQUNqQyxDQUFDO0NBQ0oiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBFeHByZXNzaW9uIH0gZnJvbSBcIkBzdHJ1Y3R1cmVzXCI7XG5cbmV4cG9ydCBjbGFzcyBJZGVudGlmaWVyIGV4dGVuZHMgRXhwcmVzc2lvbiB7XG4gICAga2luZCA9ICdJZGVudGlmaWVyJyBhcyBjb25zdDtcbiAgICBzeW1ib2w6IHN0cmluZztcblxuICAgIGNvbnN0cnVjdG9yKG9wdGlvbnM6IE9taXQ8SWRlbnRpZmllciwgJ2tpbmQnPikge1xuICAgICAgICBzdXBlcigpO1xuXG4gICAgICAgIHRoaXMuc3ltYm9sID0gb3B0aW9ucy5zeW1ib2w7XG4gICAgfVxufSJdfQ==
