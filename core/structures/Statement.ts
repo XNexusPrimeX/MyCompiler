@@ -5,6 +5,7 @@ type NodeType =
     | 'BooleanLiteral'
     | 'Identifier'
     | 'BinaryExpression'
+    | 'AssignExpression'
     | 'NullLiteral';
 
 export abstract class Statement {

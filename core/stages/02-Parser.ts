@@ -1,6 +1,6 @@
 import { additiveOperators, allOperators, comparativeOperators, multiplicitateOperators, TokenType } from "@constants";
 import { Statement } from "@structures";
-import { BinaryExpression, BooleanLiteral, Identifier, NumberLiteral, StringLiteral } from '@expressions';
+import { AssignExpression, BinaryExpression, BooleanLiteral, Identifier, NumberLiteral, StringLiteral } from '@expressions';
 import InterpreterError from "@errors";
 import { Token, Tokenizer } from "./01-Tokenizer.ts";
 
@@ -28,6 +28,17 @@ export class Parser {
 
             switch (tk) {
                 case TokenType.Identifier: {
+                    const symbol = this.eat().value;
+
+                    if(this.at().value === '=') {
+                        this.eat();
+
+                        return new AssignExpression({
+                            symbol,
+                            value: this.eat()
+                        });
+                    }
+
                     return new Identifier({
                         symbol: this.eat().value
                     });

@@ -1,10 +1,10 @@
-import { BinaryExpression, BooleanLiteral, NumberLiteral, StringLiteral } from "@expressions";
-import { Statement } from "@structures";
+import { AssignExpression, BinaryExpression, BooleanLiteral, Identifier, NumberLiteral, StringLiteral } from "@expressions";
+import { Environment, Statement } from "@structures";
 import InterpreterError from "@errors";
 import { Program } from "./02-Parser.ts";
 import { comparativeOperators, multiplicitateOperators } from "../constants/Operators.ts";
 
-interface RuntimeVal {
+export interface RuntimeVal {
     type: string,
     value: any
 }
@@ -17,8 +17,11 @@ interface NumberVal extends RuntimeVal {
 export class Runtime {
     returns;
 
-    private evaluate(astNode: Statement): RuntimeVal {
+    private evaluate(astNode: Statement, env: Environment): RuntimeVal {
         switch(astNode.kind) {
+            case 'Identifier': {
+                return env.lookupVar((astNode as Identifier).symbol);
+            }
             case 'NumberLiteral': {
                 return {
                     type: 'number',
@@ -40,11 +43,16 @@ export class Runtime {
             case "NullLiteral": {
                 return { value: "null", type: "null" };
             }
+            case "AssignExpression": {
+                const variable = astNode as AssignExpression;
+
+                return env.declareVar(variable.symbol, variable.value);
+            }
             case "BinaryExpression": {
                 const binOperation = astNode as BinaryExpression;
 
-                const lhs = <NumberVal>this.evaluate(binOperation.left);
-                const rhs = <NumberVal>this.evaluate(binOperation.right);
+                const lhs = <NumberVal>this.evaluate(binOperation.left, env);
+                const rhs = <NumberVal>this.evaluate(binOperation.right, env);
                 
                 return this.evalBinaryExpression(
                   lhs,
@@ -55,7 +63,7 @@ export class Runtime {
             case "Program": {
                 let lastEvaluated = { type: "null", value: "null" };
                 for (const statement of (astNode as Program).body) {
-                    lastEvaluated = <any>this.evaluate(statement);
+                    lastEvaluated = <any>this.evaluate(statement, env);
                 }
                 return lastEvaluated;
             }
@@ -88,7 +96,7 @@ export class Runtime {
         } as RuntimeVal
     }
 
-    constructor(astNode: Statement) {
-        this.returns = this.evaluate(astNode);
+    constructor(astNode: Statement, env: Environment) {
+        this.returns = this.evaluate(astNode, env);
     }
 }

@@ -4,6 +4,7 @@ const makeMessages = (msgs: {[key in typeof errorCode[keyof typeof errorCode]]: 
 
 export default makeMessages({
     [errorCode.Sintax]: () => `Invalid Sintax`,
+    [errorCode.Identifier]: (error) => error,
     [errorCode.Parse]: (token) => `This token can't be parsed: "${token}"`,
     [errorCode.UnexpectedCharacter]: (character) => `Invalid character: "${character}"`,
     [errorCode.ZeroDivision]: () => 'The division by zero is impossible',

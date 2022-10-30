@@ -5,7 +5,8 @@ const keys = [
     'ZeroDivision',
     'UnexpectedCharacter',
     'Type',
-    'Runtime'
+    'Runtime',
+    'Identifier'
 ] as const;
 
 type _export = {
