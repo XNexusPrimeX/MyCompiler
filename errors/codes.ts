@@ -6,7 +6,8 @@ const keys = [
     'UnexpectedCharacter',
     'Type',
     'Runtime',
-    'Identifier'
+    'Identifier',
+    'NotFound'
 ] as const;
 
 type _export = {

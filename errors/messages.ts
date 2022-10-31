@@ -10,4 +10,5 @@ export default makeMessages({
     [errorCode.ZeroDivision]: () => 'The division by zero is impossible',
     [errorCode.Type]: (expectedType, obtainedType) => `Expected type: ${expectedType}, but got: ${obtainedType}`,
     [errorCode.Runtime]: (type) => `No instructions to evaluate this type: ${type}`,
+    [errorCode.NotFound]: (path) => `Module not found: "${path}"`
 });

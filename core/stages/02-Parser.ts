@@ -40,7 +40,7 @@ export class Parser {
                     }
 
                     return new Identifier({
-                        symbol: this.eat().value
+                        symbol
                     });
                 }
                 case TokenType.Number: {
@@ -120,7 +120,6 @@ export class Parser {
         }
         let comparativeParse = () => {
             let left = additiveParse()
-        
             while(comparativeOperators.includes(this.at().value)) {
                 const operator = this.eat().value;
                 const right = additiveParse();

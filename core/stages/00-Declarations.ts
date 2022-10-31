@@ -8,8 +8,8 @@ const globalVars: { [key: string]: RuntimeVal } = {
     }
 }
 
-export class Declarations {
-    constructor(env: Environment) {
+export class GlobalDeclarations {
+    static set(env: Environment) {
         for(let [varName, varValue] of Object.entries(globalVars)) {
             env.declareVar(varName, varValue);
         }
