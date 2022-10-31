@@ -35,7 +35,7 @@ export class Parser {
 
                         return new AssignExpression({
                             symbol,
-                            value: this.eat()
+                            value: this.parse()
                         });
                     }
 

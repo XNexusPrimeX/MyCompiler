@@ -46,7 +46,7 @@ export class Runtime {
             case "AssignExpression": {
                 const variable = astNode as AssignExpression;
 
-                env.declareVar(variable.symbol, variable.value);
+                env.declareVar(variable.symbol, this.evaluate(variable.value, env));
 
                 return { type: 'null', value: 'null' }
             }
