@@ -1,5 +1,0 @@
-export const Keyword = [
-    'var',
-    'const'
-];
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiS2V5d29yZC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIktleXdvcmQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxDQUFDLE1BQU0sT0FBTyxHQUFHO0lBQ25CLEtBQUs7SUFDTCxPQUFPO0NBQ0QsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjb25zdCBLZXl3b3JkID0gW1xuICAgICd2YXInLFxuICAgICdjb25zdCdcbl0gYXMgY29uc3Q7Il19
